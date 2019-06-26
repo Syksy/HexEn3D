@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HexEn
+namespace HexEn3D
 {
     public static class HexMapper
     {
