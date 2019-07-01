@@ -1,0 +1,11 @@
+D:\Gits\HexEn3D\HexEn3D\obj\Debug\netcoreapp2.0\HexEn3D.csprojAssemblyReference.cache
+D:\Gits\HexEn3D\HexEn3D\obj\Debug\netcoreapp2.0\HexEn3D.csproj.CoreCompileInputs.cache
+D:\Gits\HexEn3D\HexEn3D\obj\Debug\netcoreapp2.0\HexEn3D.AssemblyInfoInputs.cache
+D:\Gits\HexEn3D\HexEn3D\obj\Debug\netcoreapp2.0\HexEn3D.AssemblyInfo.cs
+D:\Gits\HexEn3D\HexEn3D\bin\Debug\netcoreapp2.0\HexEn3D.deps.json
+D:\Gits\HexEn3D\HexEn3D\bin\Debug\netcoreapp2.0\HexEn3D.runtimeconfig.json
+D:\Gits\HexEn3D\HexEn3D\bin\Debug\netcoreapp2.0\HexEn3D.runtimeconfig.dev.json
+D:\Gits\HexEn3D\HexEn3D\bin\Debug\netcoreapp2.0\HexEn3D.dll
+D:\Gits\HexEn3D\HexEn3D\bin\Debug\netcoreapp2.0\HexEn3D.pdb
+D:\Gits\HexEn3D\HexEn3D\obj\Debug\netcoreapp2.0\HexEn3D.dll
+D:\Gits\HexEn3D\HexEn3D\obj\Debug\netcoreapp2.0\HexEn3D.pdb

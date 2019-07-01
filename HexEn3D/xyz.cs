@@ -48,6 +48,21 @@ namespace HexEn3D
         }
 
         // Other methods
+        public xyz changeX(double x)
+        {
+            this.x = x;
+            return this;
+        }
+        public xyz changeY(double y)
+        {
+            this.y = y;
+            return this;
+        }
+        public xyz changeZ(double z)
+        {
+            this.z = z;
+            return this;
+        }
 
         // Adding and subtracting two {x,y,z} vectors
         public static xyz operator +(xyz xyz1, xyz xyz2)

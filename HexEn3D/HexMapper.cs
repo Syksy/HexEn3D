@@ -183,6 +183,7 @@ namespace HexEn3D
         // Main class for testing
         public static void Main()
         {
+            // Testing the static class HexMapper
             xyz[] tmp = createGlobalHexVertexCoord(0, 0, 0);
             Console.Write("Vertex coordinates for origo at {0,0,0}:\n");
             foreach(xyz obj in tmp)
@@ -195,8 +196,23 @@ namespace HexEn3D
             {
                 Console.Write(obj + "\n");
             }
+            // Testing HexMap
+
+            Console.WriteLine("Creating a HexMap of 4 * 4 size.");
+            HexMap map = new HexMap(4, 4, 1.0);
+            map.setElevationAt(0, 0, 2.0);
+            map.setElevationAt(1, 0, 4.0);
+            map.setElevationAt(0, 1, 2.0);
+            map.setElevationAt(1, 1, 3.0);
+            map.setElevationAt(0, 2, 3.0);
+            map.setElevationAt(0, 3, 4.5);
+            map.computeElevationCorners();
+            for (int i = 0; i < 3; i++) map.setElevationAt(2, i, 2.5);
+            Console.WriteLine("HexMap created... printing.");
+            Console.Write(map);
+
             Console.WriteLine("Finished, press enter.");
-            Console.ReadLine();
+            Console.ReadLine();       
         }
     }
 }
