@@ -69,6 +69,10 @@ namespace HexEn3D
         }
 
         // Getters
+        public xyz[] getGlobalVerticesAtMap(int x, int y)
+        {
+            return map[x, y].getGlobalVertices(x, y);
+        }
         public Hex[,] getMap()
         {
             return map;
@@ -232,7 +236,7 @@ namespace HexEn3D
             }
         }
 
-        // Override String representation of the xyz-object
+        // Override String representation of the HexMap-object
         public override String ToString()
         {
             string str = "HexMap;\n";

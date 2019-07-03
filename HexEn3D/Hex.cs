@@ -18,6 +18,10 @@ namespace HexEn3D
         private double elevation;
         // Whether the Hex is in active use
         private Boolean active;
+        // Information of where the Hex is located on a map (not necessarily used); 
+        // -1 default value indicates that this information has not been provided
+        private int xglobal = -1;
+        private int yglobal = -1;
 
         public Hex()
         {
@@ -48,10 +52,31 @@ namespace HexEn3D
         }
 
         // Getters
-        public double getElevation()
+        // Vertex indices in the global coordinate axes
+        public xyz[] getGlobalVertices(int x, int y)
         {
-            return this.elevation;
+            // Set global coordinates and return the override function array
+            this.xglobal = x;
+            this.yglobal = y;
+            return this.getGlobalVertices();
         }
+        // Obtain global coordinates if xglobal & yglobal have been set
+        public xyz[] getGlobalVertices()
+        {
+            xyz[] xyzs = new xyz[6];
+            if(xglobal != -1 & yglobal != -1)
+            {
+                // Global info available, mapping each vertex shifted by corresponding tile origo
+                xyzs = HexMapper.createGlobalHexVertexCoord(xglobal, yglobal);
+            }
+            else
+            {
+                // No global info provided, using local coordinates instead as if located at {0,0} in tile map
+                xyzs = this.getVertices();
+            }
+            return xyzs;
+        }
+        // Local vertex indices
         public xyz[] getVertices()
         {
             return this.vertices;
@@ -59,6 +84,10 @@ namespace HexEn3D
         public xyz getVertexAt(int i)
         {
             return this.vertices[i];
+        }
+        public double getElevation()
+        {
+            return this.elevation;
         }
         public Boolean getActive()
         {
@@ -103,10 +132,14 @@ namespace HexEn3D
         {
             this.active = active;
         }
-
+        public void setGlobalCoord(int x, int y)
+        {
+            this.xglobal = x;
+            this.yglobal = y;
+        }
         // Other methods
 
-        // Override String representation of the xyz-object
+        // Override String representation of the Hex-object
         public override String ToString()
         {
             string str = "Hex representation;\n";

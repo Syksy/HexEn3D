@@ -116,7 +116,7 @@ namespace HexEn3D
             return xyzs;
         }
         // Overloading with a single global hex
-        public static xyz createGlobalOrigoMap(int x, int y, int z)
+        public static xyz createGlobalOrigoMap(int x, int y)
         {
             xyz tmpxyz = new xyz();
             if (x != 0 & y != 0)
@@ -135,10 +135,10 @@ namespace HexEn3D
             }
             return tmpxyz;
         }
-        // {a,b,c} are the global origo coordinates
-        public static xyz[] createGlobalHexVertexCoord(int a, int b, int c)
+        // {x,y} are the global origo coordinates; z-axis is omitted as presumably the Hex map is a single molded plane
+        public static xyz[] createGlobalHexVertexCoord(int x, int y)
         {
-            xyz globalCoord = createGlobalOrigoMap(a, b, c);
+            xyz globalCoord = createGlobalOrigoMap(x, y);
             // Hexagon has 6 coordinates for vertices; format array with origos
             xyz[] xyzs = new xyz[6] { globalCoord, globalCoord, globalCoord, globalCoord, globalCoord, globalCoord };
             xyz[] localshift = createLocalHexVertexCoord();
@@ -180,24 +180,24 @@ namespace HexEn3D
             return xyzs;
         }
 
+        /*        
         // Main class for testing
         public static void Main()
         {
             // Testing the static class HexMapper
-            xyz[] tmp = createGlobalHexVertexCoord(0, 0, 0);
-            Console.Write("Vertex coordinates for origo at {0,0,0}:\n");
+            xyz[] tmp = createGlobalHexVertexCoord(0, 0);
+            Console.Write("Vertex coordinates for Hex at {0,0}:\n");
             foreach(xyz obj in tmp)
             {
                 Console.Write(obj + "\n");
             }
-            tmp = createGlobalHexVertexCoord(2, 1, 0);
-            Console.Write("Vertex coordinates for origo at {2,1,0}:\n");
+            tmp = createGlobalHexVertexCoord(2, 1);
+            Console.Write("Vertex coordinates for Hex at {2,1}:\n");
             foreach (xyz obj in tmp)
             {
                 Console.Write(obj + "\n");
             }
             // Testing HexMap
-
             Console.WriteLine("Creating a HexMap of 4 * 4 size.");
             HexMap map = new HexMap(4, 4, 1.0);
             map.setElevationAt(0, 0, 2.0);
@@ -210,10 +210,12 @@ namespace HexEn3D
             for (int i = 0; i < 3; i++) map.setElevationAt(2, i, 2.5);
             Console.WriteLine("HexMap created... printing.");
             Console.Write(map);
+            
 
             Console.WriteLine("Finished, press enter.");
             Console.ReadLine();       
         }
+        */
     }
 }
 

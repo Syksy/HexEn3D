@@ -1,0 +1,8 @@
+D:\Gits\HexEn3D\HexEn3D\bin\Release\netcoreapp2.0\HexEn3D.deps.json
+D:\Gits\HexEn3D\HexEn3D\bin\Release\netcoreapp2.0\HexEn3D.dll
+D:\Gits\HexEn3D\HexEn3D\bin\Release\netcoreapp2.0\HexEn3D.pdb
+D:\Gits\HexEn3D\HexEn3D\obj\Release\netcoreapp2.0\HexEn3D.csproj.CoreCompileInputs.cache
+D:\Gits\HexEn3D\HexEn3D\obj\Release\netcoreapp2.0\HexEn3D.AssemblyInfoInputs.cache
+D:\Gits\HexEn3D\HexEn3D\obj\Release\netcoreapp2.0\HexEn3D.AssemblyInfo.cs
+D:\Gits\HexEn3D\HexEn3D\obj\Release\netcoreapp2.0\HexEn3D.dll
+D:\Gits\HexEn3D\HexEn3D\obj\Release\netcoreapp2.0\HexEn3D.pdb
