@@ -4,15 +4,15 @@ namespace HexEn3D
 {
     public class HexMap
     {
-        // Hex has 6 corners
+        // Hex has 6 corners + inner vertex
         /*  1. /-----\ 2.
          *    / \   / \
-         *0. /___6_7___\ 3.
+         *0. /___\6/___\ 3.
          *   \   / \   /
          *    \ /   \ /
          *  5. \-----/ 4.
          */
-         // Map
+         // Map coordinates {x,y}
          /*         -----           -----           -----
          *         /     \         /     \         /     \
          *        /       \       /       \       /       \
@@ -48,7 +48,8 @@ namespace HexEn3D
             {
                 for(int j = 0; j < ysize+2; j++)
                 {
-                    map[i,j] = new Hex();
+                    map[i, j] = new Hex();
+                    map[i, j].setGlobalCoord(i, j);
                 }
             }
             this.xsize = xsize;
@@ -61,7 +62,8 @@ namespace HexEn3D
             {
                 for (int j = 0; j < ysize+2; j++)
                 {
-                    map[i,j] = new Hex(elevation);
+                    map[i, j] = new Hex(elevation);
+                    map[i, j].setGlobalCoord(i, j);
                 }
             }
             this.xsize = xsize;
@@ -71,11 +73,16 @@ namespace HexEn3D
         // Getters
         public xyz[] getGlobalVerticesAtMap(int x, int y)
         {
-            return map[x, y].getGlobalVertices(x, y);
+            // Skip buffers but act as if the origo was at {0,0}
+            return map[x + 1, y + 1].getGlobalVertices(x, y);
         }
         public Hex[,] getMap()
         {
             return map;
+        }
+        public Hex getHexAt(int x, int y)
+        {
+            return map[x + 1, y + 1];
         }
         public int getXSize()
         {
@@ -108,9 +115,10 @@ namespace HexEn3D
              *  5. \-----/ 4.
              */
             // Add 1 buffer time to sides to avoid excess special cases
-            for (int i=1; i<xsize; i++)
+            // Do not compute elevations for the buffer sides
+            for (int i=1; i<xsize+1; i++)
             {
-                for(int j=1; j<ysize; j++)
+                for(int j=1; j<ysize+1; j++)
                 {
                     if (i % 2 == 0) // x coordinate is even
                     {
@@ -158,7 +166,7 @@ namespace HexEn3D
                         map[i,j].setVertexZAt(
                             // New elevation
                             (map[i,j].getElevation() // Self
-                                + map[i+1,j-1].getElevation() + map[i-1,j-1].getElevation()) // Neighbors                                
+                                + map[i-1,j-1].getElevation() + map[i+0,j-1].getElevation()) // Neighbors                                
                                 / 3.0, // Average at the triangle junction
                             5 // Vertex index
                         );

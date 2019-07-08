@@ -4,16 +4,16 @@ namespace HexEn3D
 {
     public class Hex
     {
-        // Hex has 6 corners
+        // Hex has 6 corners + inner vertex
         /*  1. /-----\ 2.
          *    / \   / \
-         *0. /___6_7___\ 3.
+         *0. /___\6/___\ 3.
          *   \   / \   /
          *    \ /   \ /
          *  5. \-----/ 4.
          */
         // Additionally, for 3d plotting the mesh triangles require two additional points inside
-        private xyz[] vertices; // Length 8
+        private xyz[] vertices; // Length 7
         // The height at which the hex is at
         private double elevation;
         // Whether the Hex is in active use
@@ -25,8 +25,8 @@ namespace HexEn3D
 
         public Hex()
         {
-            vertices = new xyz[8];
-            for(int i=0; i<8; i++)
+            vertices = new xyz[7];
+            for(int i=0; i<7; i++)
             {
                 vertices[i] = new xyz(); // coords 0,0,0
             }
@@ -35,8 +35,8 @@ namespace HexEn3D
         }
         public Hex(double elevation)
         {
-            vertices = new xyz[8];
-            for (int i = 0; i < 8; i++)
+            vertices = new xyz[7];
+            for (int i = 0; i < 7; i++)
             {
                 vertices[i] = new xyz(); // coords 0,0,elevation
             }
@@ -45,7 +45,7 @@ namespace HexEn3D
         }
         public Hex(xyz[] xyzs, double elevation)
         {
-            if (xyzs.Length != 8) throw new System.ArgumentOutOfRangeException("Parameter xyzs should be of length 8 in Hex class.");
+            if (xyzs.Length != 7) throw new System.ArgumentOutOfRangeException("Parameter xyzs should be of length 8 in Hex class.");
             this.vertices = xyzs;
             this.elevation = elevation; // Custom z-axis elevation
             this.active = true; // Created Hexes are active by default
@@ -63,7 +63,7 @@ namespace HexEn3D
         // Obtain global coordinates if xglobal & yglobal have been set
         public xyz[] getGlobalVertices()
         {
-            xyz[] xyzs = new xyz[6];
+            xyz[] xyzs = new xyz[7];
             if(xglobal != -1 & yglobal != -1)
             {
                 // Global info available, mapping each vertex shifted by corresponding tile origo
@@ -98,34 +98,33 @@ namespace HexEn3D
         // Setters
         public void setElevation(double elevation)
         {
-            // Central vertices 6 & 7 are always at hex elevation
+            // Central vertex is always at hex elevation
             this.vertices[6].setZ(elevation);
-            this.vertices[7].setZ(elevation);
             this.elevation = elevation;
         }
         public void setVertexAt(xyz xyztmp, int index)
         {
-            if (index < 0 | index > 8) throw new System.ArgumentOutOfRangeException("Parameter index in Hyx.setVertexAt should be between 0 and 7.");
+            if (index < 0 | index > 6) throw new System.ArgumentOutOfRangeException("Parameter index in Hyx.setVertexAt should be between 0 and 7.");
             this.vertices[index] = xyztmp;
         }
         public void setVertexXAt(double x, int index)
         {
-            if (index < 0 | index > 8) throw new System.ArgumentOutOfRangeException("Parameter index in Hyx.setVertexXAt should be between 0 and 7.");
+            if (index < 0 | index > 6) throw new System.ArgumentOutOfRangeException("Parameter index in Hyx.setVertexXAt should be between 0 and 7.");
             this.vertices[index].setX(x);
         }
         public void setVertexYAt(double y, int index)
         {
-            if (index < 0 | index > 8) throw new System.ArgumentOutOfRangeException("Parameter index in Hyx.setVertexYAt should be between 0 and 7.");
+            if (index < 0 | index > 6) throw new System.ArgumentOutOfRangeException("Parameter index in Hyx.setVertexYAt should be between 0 and 7.");
             this.vertices[index].setY(y);
         }
         public void setVertexZAt(double z, int index)
         {
-            if (index < 0 | index > 8) throw new System.ArgumentOutOfRangeException("Parameter index in Hyx.setVertexZAt should be between 0 and 7.");
+            if (index < 0 | index > 6) throw new System.ArgumentOutOfRangeException("Parameter index in Hyx.setVertexZAt should be between 0 and 7.");
             this.vertices[index].setZ(z);
         }
         public void setVertices(xyz[] xyztmp)
         {
-            if(xyztmp.Length!=8) throw new System.ArgumentOutOfRangeException("Parameter xyztmp in Hyx.setVertex should be a xyz[] array of length 8.");
+            if(xyztmp.Length!=7) throw new System.ArgumentOutOfRangeException("Parameter xyztmp in Hyx.setVertex should be a xyz[] array of length 8.");
             this.vertices = xyztmp;
         }
         public void setActive(bool active)
@@ -136,6 +135,7 @@ namespace HexEn3D
         {
             this.xglobal = x;
             this.yglobal = y;
+            this.vertices = HexMapper.createGlobalHexVertexCoord(x, y);
         }
         // Other methods
 
@@ -143,9 +143,9 @@ namespace HexEn3D
         public override String ToString()
         {
             string str = "Hex representation;\n";
-            for(int i = 0; i < 8; i++)
+            for(int i = 0; i < 7; i++)
             {
-                str += "Vertex" + i + ": " + vertices[i] + "\n";
+                str += "Vertex" + i + ": " + vertices[i] + " with global coord {" + xglobal + "," + yglobal + "}\n";
             }
             return str;
         }
