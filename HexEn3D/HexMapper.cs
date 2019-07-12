@@ -1,10 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HexEn3D
 {
     public static class HexMapper
     {
+        // Constants related to Hex positioning on {x,y} plane
         private static double R = 1.0, H = Math.Sqrt(3)*R, W = 2*R, S = (3/2)*R;
+        // Vague archetypes for hex types
+        public static Dictionary<string, int> hexTypes
+            = new Dictionary<string, int>
+            {
+                { "UNDEFINED", 0 },
+                { "LIGHT_FOREST", 1 },
+                { "THICK_FOREST", 2 },
+                { "PLAINS", 3 },
+                { "RIVER", 4 },
+                { "WATER", 5 }
+            };
+        public static double[] hexTypeMoveCoefs
+            = new double[]
+            {
+                1.0,
+                1.5,
+                2.0,
+                1.2,
+                2.5,
+                5.0           
+            };
         /*      /-----\       =
          *     /r\     \      |
          *    /___\     \     | h (height)
@@ -89,34 +112,38 @@ namespace HexEn3D
          *                
          */
 
-        // Array of discrete coordinates
-        /*
-        public static xyz[] createGlobalOrigoMap(int[] xs, int[] ys, int[] zs)
+        // Get movement cost for moving from Hex a to Hex b
+        public static double getMoveCost(Hex a, Hex b)
         {
-            xyz[] xyzs = new xyz[xs.Length];
-            for (int i = 0; i < xyzs.Length; i++)
+            double coef1 = getMoveCoef(a); // Movement cost multiplier from terrain type in a
+            double coef2 = getMoveCoef(b); // Movement cost multiplier from terrain type in b
+            double elevChange = getElevationDifference(a, b);
+            double elevCoef = 0.0;
+            if(elevChange >= 0) // going uphill or staying at same plane
             {
-                xyz tmpxyz = new xyz(0, 0, 0);
-                if (xs[i] != 0 & ys[i] != 0)
-                {
-                    // x-coordinate dictates the alternating heights
-                    if (xs[i] % 2 == 0) // x-coord in {2,4,6,8, ...}
-                    {
-                        tmpxyz.setX((xs[i] / 2) * W + (xs[i] / 2) * R);
-                        tmpxyz.setY(ys[i] * H);
-                    }
-                    else // x-coord in {1,3,5,7, ...}
-                    {
-                        tmpxyz.setX(((xs[i]-1) / 2) * W + ((xs[i]-1) / 2) * R);
-                        tmpxyz.setY((ys[i] * H) + (0.5 * H));
-                    }
-                }
-                xyzs[i] = tmpxyz;
+                elevCoef = 1.0 + elevChange;
             }
-            return xyzs;
+            else // going downhill
+            {
+                elevCoef = 1.0 / (1.0 + Math.Abs(elevChange));
+            }
+            return elevCoef*(coef1 + coef2);
         }
-        */
 
+        // Get movement coefficient for a certain hexType
+        public static double getMoveCoef(string hexType)
+        {
+            return hexTypeMoveCoefs[hexTypes[hexType]];
+        }
+        public static double getMoveCoef(Hex hex)
+        {
+            return hexTypeMoveCoefs[hexTypes[hex.getHexType()]];
+        }
+        // Get the elevation difference between two hexes; posive means going uphill from a to b
+        public static double getElevationDifference(Hex a, Hex b)
+        {
+            return a.getElevation() - b.getElevation();
+        }
         // Overloading with a single global hex
         public static xyz createGlobalOrigoMap(int x, int y)
         {

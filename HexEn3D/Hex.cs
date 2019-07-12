@@ -22,6 +22,8 @@ namespace HexEn3D
         // -1 default value indicates that this information has not been provided
         private int xglobal = -1;
         private int yglobal = -1;
+        // The type of a hex of predetermined possibilities
+        private string hexType;
 
         public Hex()
         {
@@ -32,6 +34,7 @@ namespace HexEn3D
             }
             this.elevation = 0.0; // By default on the z=0 plane
             this.active = true; // Created Hexes are active by default
+            this.hexType = "UNDEFINED";
         }
         public Hex(double elevation)
         {
@@ -42,6 +45,7 @@ namespace HexEn3D
             }
             this.elevation = elevation; // By default on the z=0 plane
             this.active = true; // Created Hexes are active by default
+            this.hexType = "UNDEFINED";
         }
         public Hex(xyz[] xyzs, double elevation)
         {
@@ -49,9 +53,14 @@ namespace HexEn3D
             this.vertices = xyzs;
             this.elevation = elevation; // Custom z-axis elevation
             this.active = true; // Created Hexes are active by default
+            this.hexType = "UNDEFINED";
         }
 
         // Getters
+        public string getHexType()
+        {
+            return this.hexType;
+        }
         // Vertex indices in the global coordinate axes
         public xyz[] getGlobalVertices(int x, int y)
         {
@@ -76,6 +85,15 @@ namespace HexEn3D
             }
             return xyzs;
         }
+        // Get global {x,y} coord
+        public int getGlobalX()
+        {
+            return this.xglobal;
+        }
+        public int getGlobalY()
+        {
+            return this.yglobal;
+        }
         // Local vertex indices
         public xyz[] getVertices()
         {
@@ -94,8 +112,12 @@ namespace HexEn3D
             return this.active;
         }
 
-
         // Setters
+        public void setHexType(string type)
+        {
+            if(!HexMapper.hexTypes.ContainsKey(type)) throw new System.Exception("Invalid hex type (" + type + "not a hexType keyword");
+            this.hexType = type;
+        }
         public void setElevation(double elevation)
         {
             // Central vertex is always at hex elevation
@@ -142,11 +164,13 @@ namespace HexEn3D
         // Override String representation of the Hex-object
         public override String ToString()
         {
-            string str = "Hex representation;\n";
+            string str = "Hex of type " + this.hexType + " at global coord {" + xglobal + "," + yglobal + "}\n";
+            /*
             for(int i = 0; i < 7; i++)
             {
                 str += "Vertex" + i + ": " + vertices[i] + " with global coord {" + xglobal + "," + yglobal + "}\n";
             }
+            */
             return str;
         }
 
