@@ -76,41 +76,92 @@ namespace HexEn3D
             int currentx = hexPath[currentIter - 1].getGlobalX()-1;
             int currenty = hexPath[currentIter - 1].getGlobalY()-1;
             // Stepping towards destination
-            if (currentx < x1 & currenty == y1)
+            // Even x
+            if (currentx % 2 == 1)
             {
-                addStep(currentx, currenty, currentx + 1, currenty);
+                if (currentx < x1 & currenty == y1)
+                {
+                    addStep(currentx, currenty, currentx + 1, currenty);
+                }
+                else if (currentx > x1 & currenty == y1)
+                {
+                    addStep(currentx, currenty, currentx - 1, currenty);
+                }
+                else if (currentx == x1 & currenty < y1)
+                {
+                    addStep(currentx, currenty, currentx, currenty + 1);
+                }
+                else if (currentx == x1 & currenty > y1)
+                {
+                    addStep(currentx, currenty, currentx, currenty - 1);
+                }
+                else if (currentx < x1 & currenty < y1)
+                {
+                    // Illegal move in a hexagonal grid!
+                    //addStep(currentx, currenty, currentx + 1, currenty + 1);
+                    addStep(currentx, currenty, currentx + 1, currenty);
+                }
+                else if (currentx > x1 & currenty > y1)
+                {
+                    addStep(currentx, currenty, currentx - 1, currenty - 1);
+                }
+                else if (currentx < x1 & currenty > y1)
+                {
+                    addStep(currentx, currenty, currentx + 1, currenty - 1);
+                }
+                else if (currentx > x1 & currenty < y1)
+                {
+                    // Illegal move in a hexagonal grid!
+                    //addStep(currentx, currenty, currentx - 1, currenty + 1);
+                    addStep(currentx, currenty, currentx - 1, currenty);
+                }
+                else
+                {
+                    finished = true; // Reached destination
+                }
             }
-            else if(currentx > x1 & currenty == y1)
+            else // x is odd
             {
-                addStep(currentx, currenty, currentx - 1, currenty);
-            }
-            else if (currentx == x1 & currenty < y1)
-            {
-                addStep(currentx, currenty, currentx, currenty + 1);
-            }
-            else if (currentx == x1 & currenty > y1)
-            {
-                addStep(currentx, currenty, currentx, currenty - 1);
-            }
-            else if (currentx < x1 & currenty < y1)
-            {
-                addStep(currentx, currenty, currentx + 1, currenty + 1);
-            }
-            else if (currentx > x1 & currenty > y1)
-            {
-                addStep(currentx, currenty, currentx - 1, currenty - 1);
-            }
-            else if (currentx < x1 & currenty > y1)
-            {
-                addStep(currentx, currenty, currentx + 1, currenty - 1);
-            }
-            else if (currentx > x1 & currenty < y1)
-            {
-                addStep(currentx, currenty, currentx - 1, currenty + 1);
-            }
-            else
-            {
-                finished = true; // Reached destination
+                if (currentx < x1 & currenty == y1)
+                {
+                    addStep(currentx, currenty, currentx + 1, currenty);
+                }
+                else if (currentx > x1 & currenty == y1)
+                {
+                    addStep(currentx, currenty, currentx - 1, currenty);
+                }
+                else if (currentx == x1 & currenty < y1)
+                {
+                    addStep(currentx, currenty, currentx, currenty + 1);
+                }
+                else if (currentx == x1 & currenty > y1)
+                {
+                    addStep(currentx, currenty, currentx, currenty - 1);
+                }
+                else if (currentx < x1 & currenty < y1)
+                {
+                    addStep(currentx, currenty, currentx + 1, currenty + 1);
+                }
+                else if (currentx > x1 & currenty > y1)
+                {
+                    // Illegal move in a hexagonal grid!
+                    //addStep(currentx, currenty, currentx - 1, currenty - 1);
+                    addStep(currentx, currenty, currentx - 1, currenty);
+                }
+                else if (currentx < x1 & currenty > y1)
+                {
+                    // Illegal move in a hexagonal grid!
+                    //addStep(currentx, currenty, currentx + 1, currenty - 1);
+                    addStep(currentx, currenty, currentx + 1, currenty);
+                }
+                else if (currentx > x1 & currenty < y1)
+                {
+                    addStep(currentx, currenty, currentx - 1, currenty + 1);
+                }
+                else
+                {
+                    finished = true; // Reached destination
+                }
             }
         }
         // Add a new step from {xorigin,yorigin} to {xdest,ydest}
